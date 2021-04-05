@@ -1,6 +1,7 @@
 package com.celso.workshop.service;
 
 import com.celso.workshop.domain.User;
+import com.celso.workshop.domain.dto.UserDTO;
 import com.celso.workshop.repository.UserRepository;
 import com.celso.workshop.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,19 @@ public class UserService {
 
     public User findOne(String id){
         Optional<User> user = userRepository.findById(id);
-
         return user.orElseThrow(() -> new ObjectNotFoundException("User not found!"));
+    }
+
+    public User insert(User obj){
+        return userRepository.save(obj);
+    }
+
+    public void delete(String id){
+        findOne(id);
+        userRepository.deleteById(id);
+    }
+
+    public User fromDTO(UserDTO objDTO){
+        return new User(objDTO.getId(),objDTO.getName(),objDTO.getEmail());
     }
 }
