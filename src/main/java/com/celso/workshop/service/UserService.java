@@ -25,13 +25,24 @@ public class UserService {
         return user.orElseThrow(() -> new ObjectNotFoundException("User not found!"));
     }
 
-    public User insert(User obj){
-        return userRepository.save(obj);
+    public void insert(User obj){
+        userRepository.save(obj);
     }
 
     public void delete(String id){
         findOne(id);
         userRepository.deleteById(id);
+    }
+
+    public User update(User obj){
+       User newOBJ = findOne(obj.getId());
+       updateData(newOBJ,obj);
+        return userRepository.save(newOBJ);
+    }
+
+    private void updateData(User newOBJ, User obj) {
+        newOBJ.setName(obj.getName());
+        newOBJ.setEmail(obj.getEmail());
     }
 
     public User fromDTO(UserDTO objDTO){
