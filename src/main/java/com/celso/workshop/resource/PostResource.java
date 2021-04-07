@@ -4,6 +4,7 @@ import com.celso.workshop.domain.Post;
 import com.celso.workshop.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,4 +24,12 @@ public class PostResource {
 
         return ResponseEntity.ok().body(post);
     }
+
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    public ResponseEntity<Post> findPost(@PathVariable String id){
+        Post post = postService.findPost(id);
+        return ResponseEntity.ok().body(post);
+    }
+
+
 }
